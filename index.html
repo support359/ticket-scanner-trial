@@ -1,14 +1,36 @@
-<script>
-async function testScanbot() {
-  try {
-    const sdk = await ScanbotSDK.initialize({
-      licenseKey: LICENSE_KEY
-    });
-    alert("Scanbot initialized successfully!");
-  } catch (err) {
-    console.error(err);
-    alert("Scanbot failed to initialize. Check console.");
-  }
-}
-testScanbot();
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ticket Scanner Trial</title>
+  <!-- Scanbot Web SDK -->
+  <script src="https://cdn.scanbot.io/web-sdk/bundle/ScanbotSDK.ui2.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      border-radius: 8px;
+      border: none;
+      background-color: #0070f3;
+      color: white;
+    }
+    button:hover {
+      background-color: #005bb5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Scan Your Ticket</h1>
+  <p>Click the button below to scan a ticket and upload it to Airtable.</p>
+  <button onclick="startScanner()">Scan Ticket</button>
+
+  <script>
+    // ✅ Fixed Scanbot trial license key
+    const LICENSE_KEY = "f+OakpOce+6LgAw2DmiLeIRy4FhY9fv6ilpk3hSq1T0KuusmUR1OWyxbPfWiJMx9L5SxsCOMMRs3Y/crXgvzs5fRjUjeWfF6WxQR5AVwSUF4cJFDTb6Keoj5GyTGD3beBlZWY8E9idsdI_
