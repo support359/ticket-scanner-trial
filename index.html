@@ -1,114 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ticket Scanner Trial</title>
-  <!-- Scanbot Web SDK -->
-  <script src="https://cdn.scanbot.io/web-sdk/bundle/ScanbotSDK.ui2.min.js"></script>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      margin-top: 50px;
-    }
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      cursor: pointer;
-      border-radius: 8px;
-      border: none;
-      background-color: #0070f3;
-      color: white;
-    }
-    button:hover {
-      background-color: #005bb5;
-    }
-  </style>
-</head>
-<body>
-  <h1>Scan Your Ticket</h1>
-  <p>Click the button below to scan a ticket and upload it to Airtable.</p>
-  <button onclick="startScanner()">Scan Ticket</button>
-
-  <script>
-    // Scanbot trial license
-    const LICENSE_KEY =
-      "f+OakpOce+6LgAw2DmiLeIRy4FhY9f" +
-      "v6ilpk3hSq1T0KuusmUR1OWyxbPfWi" +
-      "JMx9L5SxsCOMMRs3Y/crXgvzs5fRjU" +
-      "jeWfF6WxQR5AVwSUF4cJFDTb6Keoj5" +
-      "GyTGD3beBlZWY8E9idsdIeSP1HNbqj" +
-      "5m1ah3/iBzAIHT2ApxYvfGyGsaMqAl" +
-      "oV/In0YdWlmNiHgwyLdThtx8meb3cV" +
-      "uf+VuiY19nkNQRa064QyjPkDBYXs+m" +
-      "XvO+nPuyC+qPDtIcskPpPNLNMvXfEq" +
-      "dxgOBsuMd6Xy7aa+m3fe0YiNpUzoMH" +
-      "vANN82rn4ojTsvifBUEtwnyEti5xfg" +
-      "DYhe2PEz/EUg==\nU2NhbmJvdFNESw" +
-      "psb2NhbGhvc3R8Zm9ybXMuZmlsbG91" +
-      "dC5jb20KMTc3MTk3NzU5OQo4Mzg4Nj" +
-      "A3Cjg=\n";
-
-    // Airtable API config
-    const AIRTABLE_API_KEY = "patcYBUWNa9OZ3pkh.8bb27f28443183c84581dd91e0cfad847c2455357061ee7643298a287127eb41";
-    const AIRTABLE_BASE_ID = "appQ5HBMTnywEDckQ";
-    const AIRTABLE_TABLE_NAME = "Table 1";
-
-    async function startScanner() {
-      try {
-        // Initialize Scanbot SDK
-        const sdk = await ScanbotSDK.initialize({
-          licenseKey: LICENSE_KEY
-        });
-
-        // Open document scanner UI
-        const result = await sdk.ui.createDocumentScanner({
-          containerId: document.body
-        });
-
-        if (result && result.pages.length > 0) {
-          const image = result.pages[0];
-          const base64 = await image.getBase64();
-
-          // Upload to Airtable
-          await uploadToAirtable(base64);
-        }
-      } catch (err) {
-        console.error(err);
-        alert("Error starting scanner. Check console for details.");
-      }
-    }
-
-    async function uploadToAirtable(base64Image) {
-      try {
-        const response = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${AIRTABLE_TABLE_NAME}`, {
-          method: "POST",
-          headers: {
-            "Authorization": `Bearer ${AIRTABLE_API_KEY}`,
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify({
-            fields: {
-              "Ticket Image": [
-                {
-                  "url": "data:image/jpeg;base64," + base64Image
-                }
-              ]
-            }
-          })
-        });
-
-        if (!response.ok) {
-          throw new Error(`Airtable upload failed: ${response.statusText}`);
-        }
-
-        alert("Ticket successfully uploaded to Airtable!");
-      } catch (err) {
-        console.error(err);
-        alert("Error uploading to Airtable. Check console for details.");
-      }
-    }
-  </script>
-</body>
-</html>
+<script>
+async function testScanbot() {
+  try {
+    const sdk = await ScanbotSDK.initialize({
+      licenseKey: LICENSE_KEY
+    });
+    alert("Scanbot initialized successfully!");
+  } catch (err) {
+    console.error(err);
+    alert("Scanbot failed to initialize. Check console.");
+  }
+}
+testScanbot();
+</script>
